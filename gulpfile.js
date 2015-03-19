@@ -1,5 +1,7 @@
 var path = require('path');
+var json = require('jsonfile')
 var gulp = require('gulp');
+var sync = require('browser-sync');
 var clean = require('gulp-clean');
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
@@ -9,26 +11,24 @@ var csso = require('gulp-csso');
 var swig = require('gulp-swig');
 var htmlmin = require('gulp-htmlmin');
 var files = require('gulp-filelist');
-var json = require('jsonfile')
 var watch = require('gulp-watch');
-var sync = require('browser-sync');
 
 gulp.task('clean-styles', function () {
-  return gulp.src(['./dist/*.css', './build/*.css'], {
+  return gulp.src(['./dist/css/*.css', './build/css/*.css'], {
       read: false
     })
     .pipe(clean());
 });
 
 gulp.task('clean-scripts', function () {
-  return gulp.src(['./dist/*.js', './build/*.js'], {
+  return gulp.src(['./dist/js/*.js', './build/js/*.js'], {
       read: false
     })
     .pipe(clean());
 });
 
 gulp.task('clean-templates', function () {
-  return gulp.src(['./build/*.html', './*.html'], {
+  return gulp.src(['./build/*.html', './dist/*.html'], {
       read: false
     })
     .pipe(clean());
@@ -44,10 +44,10 @@ gulp.task('clean-taglist', function () {
 gulp.task('styles', ['clean-styles'], function (cb) {
   return gulp.src(['./src/css/*.css'])
     .pipe(concat('all.css'))
-    .pipe(gulp.dest('./build'))
+    .pipe(gulp.dest('./build/css'))
     .pipe(rename('all.min.css'))
     .pipe(csso())
-    .pipe(gulp.dest('./dist'))
+    .pipe(gulp.dest('./dist/css'))
     .pipe(sync.reload({
       stream: true
     }));
@@ -56,18 +56,18 @@ gulp.task('styles', ['clean-styles'], function (cb) {
 gulp.task('tags', ['clean-taglist', 'clean-scripts'], function (cb) {
   return gulp.src(['./src/tag/*.tag'])
     .pipe(riot())
-    .pipe(gulp.dest('./build'))
+    .pipe(gulp.dest('./build/js'))
     .pipe(files('taglist.json'))
     .pipe(gulp.dest('./build'));
 });
 
 gulp.task('scripts', ['tags'], function (cb) {
-  return gulp.src(['./node_modules/riot/riot.js', './build/*.js', './src/js/*.js'])
+  return gulp.src(['./node_modules/riot/riot.js', './build/js/*.js', './src/js/*.js'])
     .pipe(concat('all.js'))
-    .pipe(gulp.dest('./build'))
+    .pipe(gulp.dest('./build/js'))
     .pipe(rename('all.min.js'))
     .pipe(uglify())
-    .pipe(gulp.dest('./dist'))
+    .pipe(gulp.dest('./dist/js'))
     .pipe(sync.reload({
       stream: true
     }));
@@ -92,7 +92,7 @@ gulp.task('templates', ['clean-templates', 'scripts'], function (cb) {
     }
   };
 
-  return gulp.src('./src/swig/*.swig')
+  return gulp.src(['./src/swig/*.swig'])
     .pipe(swig(opts))
     .pipe(gulp.dest('./build'))
     .pipe(htmlmin({
@@ -102,7 +102,7 @@ gulp.task('templates', ['clean-templates', 'scripts'], function (cb) {
       removeEmptyAttributes: true,
       collapseBooleanAttributes: true,
     }))
-    .pipe(gulp.dest('./'))
+    .pipe(gulp.dest('./dist'))
     .pipe(sync.reload({
       stream: true
     }));
@@ -110,14 +110,14 @@ gulp.task('templates', ['clean-templates', 'scripts'], function (cb) {
 
 gulp.task('serve', ['styles', 'scripts', 'templates'], function (cb) {
   sync({
-    server: './'
+    server: './dist'
   });
 
   watch(['./src/css/*.css'], function (event) {
     gulp.start('styles');
   });
 
-  watch(['./src/js/*.js', './src/tag/*.tag', './src/json/*.json', './src/swig/partials/*.swig', './src/swig/*.swig'], function (event) {
+  watch(['./src/js/*.js', './src/tag/*.tag', './src/json/*.json', './src/swig/layouts/*.swig', './src/swig/partials/*.swig', './src/swig/*.swig'], function (event) {
     gulp.start('templates');
   });
 });
