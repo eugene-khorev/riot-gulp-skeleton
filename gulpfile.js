@@ -12,8 +12,6 @@ var htmlmin = require('gulp-htmlmin');
 var files = require('gulp-filelist');
 var watch = require('gulp-watch');
 
-var debug = false;
-
 gulp.task('clean-styles', function () {
   return gulp.src(['./dist/css/*.css', './build/css/*.css'], {
       read: false
@@ -133,9 +131,15 @@ gulp.task('serve', ['styles', 'scripts', 'templates'], function (cb) {
   });
 });
 
-gulp.task('debug', function(event) {
+gulp.task('debug', function (event) {
   debug = true;
   gulp.start('serve');
 });
 
-gulp.task('default', ['serve']);
+gulp.task('default', function (event) {
+  debug = false;
+  gulp.start('serve');
+});
+
+// default value (DO NOT CHANGE)
+var debug = false;
