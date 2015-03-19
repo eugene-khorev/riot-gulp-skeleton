@@ -1,8 +1,13 @@
 {
   "page": "Main template",
-  "options": {
-    "my-tag": {
-      "color": "#0000ff"
+  "comments": [
+    {
+      "author": "Pete Hunt",
+      "text": "This is one comment"
+    },
+    {
+      "author": "Jordan Walke",
+      "text": "This is *another* comment"
     }
-  }
+  ]
 }

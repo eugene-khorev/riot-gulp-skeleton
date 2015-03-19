@@ -1,9 +1,9 @@
 {% extends "./layouts/main.swig" %}
 
 {% block content %}
-  <h1>Hello {{ name }}!</h1>
+  <h2>Hello {{ name }}!</h2>
 
   {% include "./partials/message.swig" %}
 
-  <my-tag color="{{ options['my-tag'].color }}"></my-tag>
+  <comment-box>{% autoescape false %}{{ comments | json }}{% endautoescape %}</comment-box>
 {% endblock %}

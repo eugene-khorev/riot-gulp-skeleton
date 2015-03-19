@@ -9,7 +9,6 @@
     "gulp-clean": "~0.3.1",
     "gulp-concat": "~2.5.2",
     "gulp-csso": "~1.0.0",
-    "gulp-jshint": "~1.9.2",
     "gulp-riot": "~0.2.12",
     "gulp-uglify": "~1.1.0"
   },

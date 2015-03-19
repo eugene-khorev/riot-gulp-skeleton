@@ -12,6 +12,12 @@
 </head>
 
 <body>
+  <header>
+    <h1>Logo</h1>
+
+    {% include "../partials/main-menu.swig" %}
+  </header>
+
   {% block content %}{% endblock %}
 
   <script type="application/javascript" src="js/all.js"></script>
