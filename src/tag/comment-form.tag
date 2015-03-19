@@ -12,7 +12,7 @@
   </form>
 
   <script>
-    this.submit = function (e) {
+    this.submit = function () {
       this.parent.add({
         author: this.author.value,
         text: this.text.value,
