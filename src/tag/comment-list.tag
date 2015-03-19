@@ -1,10 +1,7 @@
 <comment-list>
-  <div className="commentList">
-    <comment each={ parent.comments } author={ author }>
-      { text }
-    </comment>
-  </div>
+  <comment each={ comment, i in comments } index={ i } author={ comment.author } text={ comment.text }></comment>
 
   <script>
+    this.comments = opts.comments;
   </script>
 </comment-list>

@@ -5,5 +5,9 @@
 
   {% include "./partials/message.swig" %}
 
-  <comment-box>{% autoescape false %}{{ comments | json }}{% endautoescape %}</comment-box>
+  <script>
+    var commentList = {% autoescape false %}{{ comments | json }}{% endautoescape %};
+  </script>
+  <comment-box comments="{ commentList }"></comment-box>
+
 {% endblock %}

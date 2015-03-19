@@ -1,12 +1,14 @@
 <comment-box>
-  <div className="commentBox">
-    <h1>Comments</h1>
-    <comment-list></comment-list>
-    <comment-form></comment-form>
-  </div>
+  <h1>Comments</h1>
+  <comment-list comments={ comments }></comment-list>
+  <comment-from></comment-from>
 
   <script>
-    this.comments = JSON.parse(this.root.innerHTML);
-    this.root.innerHTML = '';
+    this.comments = opts.comments;
+
+    this.add = function (comment) {
+      this.comments.push(comment);
+      this.update();
+    }
   </script>
 </comment-box>

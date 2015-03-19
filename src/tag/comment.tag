@@ -1,13 +1,12 @@
 <comment>
-  <div className="comment">
-    <h2 className="commentAuthor">
-      { author }
-    </h2>
-    { text }
-  </div>
+  <h2>
+    #{ index + 1 } - { author }
+  </h2>
+  { text }
 
   <script>
-    this.text = this.root.innerHTML;
-    this.root.innerHTML = '';
+    this.index = opts.index;
+    this.author = opts.author;
+    this.text = opts.text;
   </script>
 </comment>
