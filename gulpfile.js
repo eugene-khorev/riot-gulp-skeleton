@@ -56,7 +56,7 @@ gulp.task('styles', ['clean-styles'], function (cb) {
 });
 
 gulp.task('tags', ['clean-taglist', 'clean-scripts'], function (cb) {
-  return gulp.src(['./src/tag/*.tag'])
+  return gulp.src(['./src/tag/**/*.tag'])
     .pipe(riot())
     .pipe(gulp.dest('./build/js'))
     .pipe(files('taglist.json'))
@@ -64,7 +64,7 @@ gulp.task('tags', ['clean-taglist', 'clean-scripts'], function (cb) {
 });
 
 gulp.task('scripts', ['tags'], function (cb) {
-  var task = gulp.src(['./node_modules/riot/riot.js', './build/js/*.js', './src/js/*.js'])
+  var task = gulp.src(['./node_modules/riot/riot.js', './build/js/**/*.js', './src/js/**/*.js'])
     .pipe(concat('all.js'))
     .pipe(gulp.dest('./build/js'));
 
