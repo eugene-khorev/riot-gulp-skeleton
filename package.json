@@ -20,7 +20,8 @@
     "gulp-filelist": "~0.1.1",
     "gulp-watch": "~4.2.0",
     "jsonfile": "~2.0.0",
-    "gulp-htmlmin": "~1.1.1"
+    "gulp-htmlmin": "~1.1.1",
+    "gulp-wrap": "~0.11.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

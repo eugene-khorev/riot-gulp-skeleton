@@ -4,6 +4,7 @@ var gulp = require('gulp');
 var sync = require('browser-sync');
 var clean = require('gulp-clean');
 var concat = require('gulp-concat');
+var wrap = require('gulp-wrap');
 var uglify = require('gulp-uglify');
 var riot = require('gulp-riot');
 var csso = require('gulp-csso');
@@ -13,14 +14,14 @@ var files = require('gulp-filelist');
 var watch = require('gulp-watch');
 
 gulp.task('clean-styles', function () {
-  return gulp.src(['./dist/css/*.css', './build/css/*.css'], {
+  return gulp.src(['./dist/css', './build/css'], {
       read: false
     })
     .pipe(clean());
 });
 
 gulp.task('clean-scripts', function () {
-  return gulp.src(['./dist/js/*.js', './build/js/*.js'], {
+  return gulp.src(['./dist/js', './build/js'], {
       read: false
     })
     .pipe(clean());
@@ -58,13 +59,15 @@ gulp.task('styles', ['clean-styles'], function (cb) {
 gulp.task('tags', ['clean-taglist', 'clean-scripts'], function (cb) {
   return gulp.src(['./src/tag/**/*.tag'])
     .pipe(riot())
+    .pipe(concat('tags.js'))
+    .pipe(wrap(';new RiotApp(function(app){\n<%= contents %>\n});'))
     .pipe(gulp.dest('./build/js'))
     .pipe(files('taglist.json'))
     .pipe(gulp.dest('./build'));
 });
 
 gulp.task('scripts', ['tags'], function (cb) {
-  var task = gulp.src(['./node_modules/riot/riot.js', './build/js/**/*.js', './src/js/**/*.js'])
+  var task = gulp.src(['./node_modules/riot/riot.js', './src/js/**/*.js', './build/js/tags.js'])
     .pipe(concat('all.js'))
     .pipe(gulp.dest('./build/js'));
 
@@ -126,7 +129,7 @@ gulp.task('serve', ['styles', 'scripts', 'templates'], function (cb) {
     gulp.start('styles');
   });
 
-  watch(['./src/js/*.js', './src/tag/*.tag', './src/json/*.json', './src/swig/layouts/*.swig', './src/swig/partials/*.swig', './src/swig/*.swig'], function (event) {
+  watch(['./src/js/**/*.js', './src/tag/**/*.tag', './src/json/*.json', './src/swig/layouts/*.swig', './src/swig/partials/*.swig', './src/swig/*.swig'], function (event) {
     gulp.start('templates');
   });
 });

@@ -1,5 +1,5 @@
 <comment-list>
-  <comment each={ comments } author={ author } text={ text }></comment>
+  <comment each={ comments } app={ app } author={ author } text={ text }></comment>
 
   <script>
     var self = this;

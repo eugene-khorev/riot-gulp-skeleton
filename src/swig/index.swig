@@ -5,6 +5,8 @@
 
   {% include "./partials/message.swig" %}
 
-  <comment-box comments="{ data.comments }"></comment-box>
+  <comment-box></comment-box>
+
+  <comment-box></comment-box>
 
 {% endblock %}

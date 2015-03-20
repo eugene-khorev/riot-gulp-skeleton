@@ -1,4 +1,4 @@
-<comment-from>
+<comment-form>
   <form onsubmit={ submit }>
     <hr>
     <label>Author</label>
@@ -8,28 +8,32 @@
     <textarea name="text" value="{ comment.text }"></textarea>
 
     <hr>
-    <button>{ index ? 'save' : 'add' } #{ parent.comments.length + 1 } comment</button>
+    <button name="add">add</button>
   </form>
 
   <script>
     var self = this;
 
-    self.index = -1;
-    self.comment = {
-      author: null,
-      text: null
-    }
-
-    self.load = function (index, comment) {
-      self.index = index;
-      self.comment = comment;
-      self.update();
-    }
+    self.comment = opts.comment;
 
     self.submit = function () {
-      self.comment.author = self.author.value;
-      self.comment.text = self.text.value;
-      riot.route('comments/' + self.index + '/save');
+      if (!self.author.value || !self.text.value) {
+        return;
+      }
+
+      self.add.disabled = true;
+
+      commentStorage.trigger('add_comment', {
+        author: self.author.value,
+        text: self.text.value
+      });
     }
+
+    commentStorage.on('comment_added', function (comment) {
+      self.author.value = '';
+      self.text.value = '';
+
+      self.add.disabled = false;
+    });
   </script>
-</comment-from>
+</comment-form>
