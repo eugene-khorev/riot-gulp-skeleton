@@ -6,9 +6,9 @@
   <script>
     var self = this;
 
-    self.comments = commentStorage.load();
+    self.comments = commentStorage.load(app);
 
-    commentStorage.on('add_comment', function (comment) {
+    app.on('comment_added', function (comment) {
       self.update({
         comments: commentStorage.comments
       });

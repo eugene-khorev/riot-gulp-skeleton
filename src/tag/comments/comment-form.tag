@@ -23,13 +23,13 @@
 
       self.add.disabled = true;
 
-      commentStorage.trigger('add_comment', {
+      app.trigger('add_comment', {
         author: self.author.value,
         text: self.text.value
       });
     }
 
-    commentStorage.on('comment_added', function (comment) {
+    app.on('comment_added', function (comment) {
       self.author.value = '';
       self.text.value = '';
 

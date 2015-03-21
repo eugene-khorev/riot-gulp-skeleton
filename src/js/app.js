@@ -1,48 +1,34 @@
-var commentStorage = riot.observable({
+var RiotApp = function (initTags) {
+  var app = riot.observable();
 
-  comments: null,
+  initTags(app);
 
-  load: function() {
-    var self = this;
+  riot.mount('*');
 
-    if (self.comments === null) {
-      this.comments = data.comments;
-    }
-
-    return self.comments;
-  }
-
-});
-
-commentStorage.on('add_comment', function (comment) {
-  commentStorage.comments.push(comment);
-  commentStorage.trigger('comment_added');
-});
-
-var RiotApp = function(riotStartup) {
-  var app = riot.observable({
-
-    init: function () {
-      var self = this;
-
-      self.data = data;
-
-      riotStartup(app);
-
-      riot.mount('*');
-
-      riot.route(function (chapter, index, action) {
-        var event = chapter + '_' + action;
-        self.trigger(event, index);
-      });
-
-      riot.route(location.hash.slice(1));
-
-      return this;
-    }
-
+  riot.route(function (chapter, index, action) {
+    var event = chapter + '_' + action;
+    app.trigger(event, index);
   });
 
-  app.init();
+  riot.route(location.hash.slice(1));
 }
 
+var RiotStorage = function (storage) {
+  storage.app = null;
+
+  return {
+    load: function (app) {
+      if (storage.app === null) {
+        storage.app = app;
+
+        for (event in storage.events) {
+          if ('function' === typeof storage.events[event]) {
+            storage.app.on(event, storage.events[event].bind(storage));
+          }
+        }
+      }
+
+      return storage.load();
+    }
+  }
+}

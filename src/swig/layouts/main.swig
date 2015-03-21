@@ -12,11 +12,11 @@
 </head>
 
 <body>
-  <header>
+  <!--header>
     <h1>Logo</h1>
 
     {% include "../partials/main-menu.swig" %}
-  </header>
+  </header-->
 
   {% block data %}
     <script>
