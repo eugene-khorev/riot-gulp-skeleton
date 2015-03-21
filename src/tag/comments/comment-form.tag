@@ -15,6 +15,15 @@
     var self = this;
 
     self.comment = opts.comment;
+    commentStorage.init(app)
+      .events({
+        comment_added: function (data) {
+          self.author.value = '';
+          self.text.value = '';
+
+          self.add.disabled = false;
+        }
+      });
 
     self.submit = function () {
       if (!self.author.value || !self.text.value) {
@@ -23,17 +32,14 @@
 
       self.add.disabled = true;
 
-      app.trigger('add_comment', {
-        author: self.author.value,
-        text: self.text.value
+      commentStorage.trigger({
+        add_comment: {
+          comment: {
+            author: self.author.value,
+            text: self.text.value
+          }
+        }
       });
     }
-
-    app.on('comment_added', function (comment) {
-      self.author.value = '';
-      self.text.value = '';
-
-      self.add.disabled = false;
-    });
   </script>
 </comment-form>

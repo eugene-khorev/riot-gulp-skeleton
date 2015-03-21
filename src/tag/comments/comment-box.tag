@@ -6,12 +6,14 @@
   <script>
     var self = this;
 
-    self.comments = commentStorage.load(app);
-
-    app.on('comment_added', function (comment) {
-      self.update({
-        comments: commentStorage.comments
-      });
-    });
+    self.comments = commentStorage.init(app)
+      .events({
+        comment_added: function (data) {
+          self.update({
+            comments: commentStorage.data()
+          });
+        }
+      })
+      .data();
   </script>
 </comment-box>

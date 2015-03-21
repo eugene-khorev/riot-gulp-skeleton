@@ -1,17 +1,20 @@
 var commentStorage = new RiotStorage({
   comments: null,
 
-  load: function () {
+  data: function() {
     if (this.comments === null) {
       this.comments = data.comments; // for now use global data variable
     }
+
     return this.comments;
   },
 
   events: {
-    add_comment: function (comment) {
-      this.comments.push(comment);
-      this.app.trigger('comment_added');
+    add_comment: function (data) {
+      this.comments.push(data.comment);
+      this.trigger({
+        comment_added: data
+      });
     }
   }
 });
