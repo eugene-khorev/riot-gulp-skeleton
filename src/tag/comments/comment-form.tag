@@ -1,5 +1,5 @@
 <comment-form>
-  <form onsubmit={ submit }>
+  <form onsubmit={ onSubmit }>
     <hr>
     <label>Author</label>
     <input type="text" name="author" value="{ comment.author }">
@@ -15,17 +15,13 @@
     var self = this;
 
     self.comment = opts.comment;
+
     commentStorage.init(app)
       .events({
-        comment_added: function (data) {
-          self.author.value = '';
-          self.text.value = '';
-
-          self.add.disabled = false;
-        }
+        comment_added: self.onCommentAdded
       });
 
-    self.submit = function () {
+    self.onSubmit = function () {
       if (!self.author.value || !self.text.value) {
         return;
       }
@@ -41,5 +37,12 @@
         }
       });
     }
+
+    self.onCommentAdded = function (data) {
+      self.author.value = '';
+      self.text.value = '';
+
+      self.add.disabled = false;
+    };
   </script>
 </comment-form>

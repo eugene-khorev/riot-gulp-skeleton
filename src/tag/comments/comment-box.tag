@@ -8,12 +8,14 @@
 
     self.comments = commentStorage.init(app)
       .events({
-        comment_added: function (data) {
-          self.update({
-            comments: commentStorage.data()
-          });
-        }
+        comment_added: self.onCommentAdded
       })
       .data();
+
+    self.onCommentAdded = function (data) {
+      self.update({
+        comments: commentStorage.data()
+      });
+    };
   </script>
 </comment-box>
