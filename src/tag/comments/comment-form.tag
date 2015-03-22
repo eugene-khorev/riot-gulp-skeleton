@@ -1,5 +1,5 @@
 <comment-form>
-  <form onsubmit={ onSubmit }>
+  <form show={ visible } onsubmit={ onSubmit }>
     <hr>
     <label>Author</label>
     <input type="text" name="author" value="{ comment.author }">
@@ -16,6 +16,7 @@
 
     // bindings
     self.comment = opts.comment;
+    self.visible = opts.visible || true;
 
     // event handlers
     self.onSubmit = function () {
@@ -31,7 +32,7 @@
       });
     }
 
-    self.onCommentAdded = function (data) {
+    self.onCommentAdded = function (comment) {
       self.author.value = '';
       self.text.value = '';
 
@@ -40,5 +41,8 @@
 
     // event bindings
     riot.on('comment_added', self.onCommentAdded);
+    riot.on('update_comment_form', function(data) {
+      self.update(data);
+    });
   </script>
 </comment-form>

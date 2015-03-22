@@ -18,8 +18,5 @@
 
     // event bindings
     riot.on('comment_added', self.onCommentAdded);
-    riot.on('route', function(args) {
-      console.log('route', args);
-    });
   </script>
 </comment-box>
