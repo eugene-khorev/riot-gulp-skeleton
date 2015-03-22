@@ -60,14 +60,20 @@ gulp.task('tags', ['clean-taglist', 'clean-scripts'], function (cb) {
   return gulp.src(['./src/tag/**/*.tag'])
     .pipe(riot())
     .pipe(concat('tags.js'))
-    .pipe(wrap(';new RiotApp(function(app){\n<%= contents %>\n});'))
+    .pipe(wrap(';riot.init = function(init){\n<%= contents %>;\n};'))
     .pipe(gulp.dest('./build/js'))
     .pipe(files('taglist.json'))
     .pipe(gulp.dest('./build'));
 });
 
 gulp.task('scripts', ['tags'], function (cb) {
-  var task = gulp.src(['./node_modules/riot/riot.js', './src/js/**/*.js', './build/js/tags.js'])
+  return gulp.src(['./node_modules/riot/riot.js', './build/js/tags.js', './src/js/**/*.js', '!./src/js/**/app.js'])
+    .pipe(concat('scripts.js'))
+    .pipe(gulp.dest('./build/js'));
+});
+
+gulp.task('app', ['scripts'], function (cb) {
+  var task = gulp.src(['./build/js/scripts.js', './src/js/**/app.js'])
     .pipe(concat('all.js'))
     .pipe(gulp.dest('./build/js'));
 
@@ -81,7 +87,7 @@ gulp.task('scripts', ['tags'], function (cb) {
   }));
 });
 
-gulp.task('templates', ['clean-templates', 'scripts'], function (cb) {
+gulp.task('templates', ['clean-templates', 'app'], function (cb) {
   var taglist = json.readFileSync('./build/taglist.json');
   var tags = taglist.map(function (tagfile) {
     return path.basename(tagfile, path.extname(tagfile));
@@ -120,7 +126,7 @@ gulp.task('templates', ['clean-templates', 'scripts'], function (cb) {
   }));
 });
 
-gulp.task('serve', ['styles', 'scripts', 'templates'], function (cb) {
+gulp.task('serve', ['styles', 'app', 'templates'], function (cb) {
   sync({
     server: debug ? './build' : './dist'
   });

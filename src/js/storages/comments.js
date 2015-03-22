@@ -1,20 +1,19 @@
-var commentStorage = new RiotStorage({
-  comments: null,
+function CommentStorage() {
+  var self = this;
 
-  data: function() {
-    if (this.comments === null) {
-      this.comments = data.comments; // for now use global data variable
-    }
+  self.comments = data.comments;
 
-    return this.comments;
-  },
-
-  events: {
-    add_comment: function (data) {
-      this.comments.push(data.comment);
-      this.trigger({
-        comment_added: data
-      });
-    }
+  self.addComment = function (comment) {
+    self.comments.push(comment);
+    riot.trigger('comment_added', comment);
   }
-});
+
+  // event bindings
+  riot.on('add_comment', self.addComment);
+
+  return {
+    getComments: function () {
+      return self.comments;
+    }
+  };
+}

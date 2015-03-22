@@ -14,13 +14,10 @@
   <script>
     var self = this;
 
+    // bindings
     self.comment = opts.comment;
 
-    commentStorage.init(app)
-      .events({
-        comment_added: self.onCommentAdded
-      });
-
+    // event handlers
     self.onSubmit = function () {
       if (!self.author.value || !self.text.value) {
         return;
@@ -28,13 +25,9 @@
 
       self.add.disabled = true;
 
-      commentStorage.trigger({
-        add_comment: {
-          comment: {
-            author: self.author.value,
-            text: self.text.value
-          }
-        }
+      riot.trigger('add_comment', {
+        author: self.author.value,
+        text: self.text.value
       });
     }
 
@@ -44,5 +37,8 @@
 
       self.add.disabled = false;
     };
+
+    // event bindings
+    riot.on('comment_added', self.onCommentAdded);
   </script>
 </comment-form>

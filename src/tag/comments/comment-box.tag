@@ -6,16 +6,20 @@
   <script>
     var self = this;
 
-    self.comments = commentStorage.init(app)
-      .events({
-        comment_added: self.onCommentAdded
-      })
-      .data();
+    // bindings
+    self.comments = commentStorage.getComments();
 
-    self.onCommentAdded = function (data) {
+    // event handlers
+    self.onCommentAdded = function (comment) {
       self.update({
-        comments: commentStorage.data()
+        comments: commentStorage.getComments()
       });
     };
+
+    // event bindings
+    riot.on('comment_added', self.onCommentAdded);
+    riot.on('route', function(args) {
+      console.log('route', args);
+    });
   </script>
 </comment-box>
