@@ -1,5 +1,5 @@
 <comment-form>
-  <form show={ visible } onsubmit={ onSubmit }>
+  <form onsubmit={ onSubmit }>
     <hr>
     <label>Author</label>
     <input type="text" name="author" value="{ comment.author }">
@@ -16,7 +16,7 @@
 
     // state
     self.comment = opts.comment;
-    self.visible = opts.visible || true;
+    self.dataset = opts.dataset || 'comment-box';
 
     // handle form submition
     self.onSubmit = function () {
@@ -26,7 +26,7 @@
 
       self.add.disabled = true;
 
-      riot.trigger('add_comment', self.parent.dataset, {
+      riot.trigger('add_comment', self.dataset, {
         author: self.author.value,
         text: self.text.value
       });
@@ -34,7 +34,7 @@
 
     // handle added comment
     self.onCommentAdded = function (dataset, comment) {
-      if (dataset === self.parent.dataset) {
+      if (dataset === self.dataset) {
         self.author.value = '';
         self.text.value = '';
 

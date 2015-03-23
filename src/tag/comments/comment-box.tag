@@ -2,7 +2,7 @@
   <div show={ visible }>
     <h1>Comments ({ name })</h1>
     <comment-list comments={ comments }></comment-list>
-    <comment-form></comment-form>
+    <comment-form dataset={ dataset }></comment-form>
   </div>
 
   <script>
