@@ -7,12 +7,12 @@
     var self = this;
 
     // bindings
-    self.comments = commentStorage.getComments();
+    self.comments = riot.commentStorage.getComments();
 
     // event handlers
     self.onCommentAdded = function (comment) {
       self.update({
-        comments: commentStorage.getComments()
+        comments: riot.commentStorage.getComments()
       });
     };
 

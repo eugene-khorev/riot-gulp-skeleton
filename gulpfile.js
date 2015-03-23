@@ -60,7 +60,7 @@ gulp.task('tags', ['clean-taglist', 'clean-scripts'], function (cb) {
   return gulp.src(['./src/tag/**/*.tag'])
     .pipe(riot())
     .pipe(concat('tags.js'))
-    .pipe(wrap(';riot.init = function(init){\n<%= contents %>;\n};'))
+    .pipe(wrap(';riot = (function(riot){ riot.observable(riot); riot.init = function(bootstrap) {\n <%= contents %>;\n bootstrap(); }; return riot; }(riot));'))
     .pipe(gulp.dest('./build/js'))
     .pipe(files('taglist.json'))
     .pipe(gulp.dest('./build'));

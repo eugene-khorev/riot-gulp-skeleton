@@ -1,32 +1,6 @@
-riot.observable(riot);
+riot.init(function () {
+  riot.mount('*');
 
-var commentStorage = new CommentStorage();
-
-riot.init();
-riot.mount('*');
-
-riot.route.parser(function (path) {
-  var raw = path.split('?'),
-    uri = raw[0].split('/'),
-    qs = raw[1],
-    params = {}
-
-  if (qs) {
-    qs.split('&').forEach(function (v) {
-      var c = v.split('=')
-      params[c[0]] = c[1]
-    })
-  }
-
-  uri.push(params)
-
-  return uri;
+  riot.dispatcher.init();
+  riot.dispatcher.run();
 });
-
-riot.route(function (event, data) {
-  if (event) {
-    riot.trigger(event, data);
-  }
-});
-
-riot.route(location.hash.slice(1));
