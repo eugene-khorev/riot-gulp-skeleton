@@ -4,6 +4,7 @@
   <script>
     var self = this;
 
+    // state
     self.comments = opts.comments;
   </script>
 </comment-list>

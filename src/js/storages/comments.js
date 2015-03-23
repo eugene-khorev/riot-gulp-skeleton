@@ -1,21 +1,27 @@
 var riot = (function (riot) {
-  riot.commentStorage = new function CommentStorage() {
+  // injection
+  riot.commentStorage = new function () {
     var self = this;
 
+    // init data
     self.comments = data.comments;
 
-    self.addComment = function (comment) {
-      self.comments.push(comment);
-      riot.trigger('comment_added', comment);
+    // methods & event handlers
+    self.addComment = function (dataset, comment) {
+      self.comments[dataset].push(comment);
+      riot.trigger('comment_added', dataset, comment);
     }
 
-    // event bindings
+    self.getComments = function (dataset) {
+      return self.comments[dataset];
+    };
+
+    // bind events
     riot.on('add_comment', self.addComment);
 
+    // return public interface
     return {
-      getComments: function () {
-        return self.comments;
-      }
+      getComments: self.getComments
     };
   };
 

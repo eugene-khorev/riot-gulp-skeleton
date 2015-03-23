@@ -14,11 +14,11 @@
   <script>
     var self = this;
 
-    // bindings
+    // state
     self.comment = opts.comment;
     self.visible = opts.visible || true;
 
-    // event handlers
+    // handle form submition
     self.onSubmit = function () {
       if (!self.author.value || !self.text.value) {
         return;
@@ -26,23 +26,23 @@
 
       self.add.disabled = true;
 
-      riot.trigger('add_comment', {
+      riot.trigger('add_comment', self.parent.dataset, {
         author: self.author.value,
         text: self.text.value
       });
     }
 
-    self.onCommentAdded = function (comment) {
-      self.author.value = '';
-      self.text.value = '';
+    // handle added comment
+    self.onCommentAdded = function (dataset, comment) {
+      if (dataset === self.parent.dataset) {
+        self.author.value = '';
+        self.text.value = '';
 
-      self.add.disabled = false;
+        self.add.disabled = false;
+      }
     };
 
     // event bindings
     riot.on('comment_added', self.onCommentAdded);
-    riot.on('update_comment_form', function(data) {
-      self.update(data);
-    });
   </script>
 </comment-form>

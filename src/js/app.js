@@ -3,4 +3,6 @@ riot.init(function () {
 
   riot.dispatcher.init();
   riot.dispatcher.run();
+
+  riot.trigger('start');
 });

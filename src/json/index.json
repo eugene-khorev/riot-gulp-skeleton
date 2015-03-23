@@ -1,15 +1,27 @@
 {
   "page": "Main template",
   "data": {
-    "comments": [
-      {
-        "author": "Pete Hunt",
-        "text": "This is one comment"
-      },
-      {
-        "author": "Jordan Walke",
-        "text": "This is *another* comment"
+    "tabs": {
+      "tab-box": {
+        "comments1": {
+          "title": "Comment Box 1"
+        },
+        "comments2": {
+          "title": "Comment Box 2"
+        }
+      }
+    },
+    "comments": {
+      "all-comments": [
+        {
+          "author": "Pete Hunt",
+          "text": "This is one comment"
+        },
+        {
+          "author": "Jordan Walke",
+          "text": "This is *another* comment"
       }
     ]
+    }
   }
 }
