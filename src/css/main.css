@@ -1,6 +1,70 @@
 body {
-  margin: 20px;
+  color: #777;
+  font-family: sans-serif;
+  font-weight: 100;
+  line-height: 1.6;
 }
+
 h1 {
-  color: #cc0000;
+  margin: 0.5em 1em 0 1em;
+  font-weight: 300;
+  color: #999;
+}
+
+h2 {
+  margin: 0.5em 1em 0 1em;
+  font-weight: 300;
+  color: #888;
+}
+
+p {
+  margin: 0.5em 1em 0 1em;
+  font-size: 1.125em;
+}
+
+form {
+  margin: 1em;
+}
+
+app {}
+
+tab-box .pure-menu {
+  background: #191818;
+}
+
+tab-box .pure-menu-heading,
+tab-box .pure-menu-heading:visited {
+  font-size: 125%;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: #fff;
+  margin-top: 0;
+  padding: 0.5em 0.8em;
+  text-transform: uppercase;
+}
+
+tab-box .pure-menu-heading:hover {
+  background: none;
+  color: #999;
+}
+
+tab-box .pure-menu-link {
+  color: #999;
+}
+
+tab-box .pure-menu-link:hover {
+  background: #333;
+}
+
+tab-box .pure-menu-selected {
+  background: #1f8dd6;
+}
+
+tab-box .pure-menu-selected .pure-menu-link,
+tab-box .pure-menu-selected .pure-menu-link:visited {
+  color: #fff;
+}
+
+tab-box .pure-menu-selected .pure-menu-link:hover {
+  background: none;
 }

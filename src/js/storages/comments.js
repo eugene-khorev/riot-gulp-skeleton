@@ -9,7 +9,10 @@ var riot = (function (riot) {
     // methods & event handlers
     self.addComment = function (dataset, comment) {
       self.comments[dataset].push(comment);
-      riot.trigger('comment_added', dataset, comment);
+
+      setTimeout(function () {
+        riot.trigger('comment_added', dataset, comment);
+      }, 500);
     }
 
     self.getComments = function (dataset) {

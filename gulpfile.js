@@ -13,6 +13,13 @@ var htmlmin = require('gulp-htmlmin');
 var files = require('gulp-filelist');
 var watch = require('gulp-watch');
 
+gulp.task('clean-fonts', function () {
+  return gulp.src(['./dist/fonts', './build/fonts'], {
+      read: false
+    })
+    .pipe(clean());
+});
+
 gulp.task('clean-styles', function () {
   return gulp.src(['./dist/css', './build/css'], {
       read: false
@@ -41,8 +48,19 @@ gulp.task('clean-taglist', function () {
     .pipe(clean());
 });
 
+gulp.task('fonts', ['clean-fonts'], function () {
+  var task = gulp.src('./node_modules/font-awesome/fonts/**/*.{ttf,woff,woff2,eof,svg}')
+    .pipe(gulp.dest('./build/fonts'));
+
+  if (!debug) {
+    task.pipe(gulp.dest('./dist/css'))
+  }
+
+  return task;
+});
+
 gulp.task('styles', ['clean-styles'], function (cb) {
-  var task = gulp.src(['./src/css/*.css'])
+  var task = gulp.src(['./node_modules/purecss/build/pure.css', './node_modules/font-awesome/css/font-awesome.css', './src/css/*.css'])
     .pipe(concat('all.css'))
     .pipe(gulp.dest('./build/css'));
 
@@ -126,7 +144,7 @@ gulp.task('templates', ['clean-templates', 'app'], function (cb) {
   }));
 });
 
-gulp.task('serve', ['styles', 'app', 'templates'], function (cb) {
+gulp.task('serve', ['fonts', 'styles', 'app', 'templates'], function (cb) {
   sync({
     server: debug ? './build' : './dist'
   });

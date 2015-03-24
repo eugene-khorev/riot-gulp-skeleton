@@ -1,5 +1,6 @@
 <comment>
-  <h2>{ author }</h2> { text }
+  <h2>{ author }</h2>
+  <p>{ text }</p>
 
   <script>
     var self = this;

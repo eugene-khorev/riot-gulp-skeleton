@@ -1,7 +1,9 @@
+<!DOCTYPE html>
 <html>
 
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/all.css">
   <!--[if lt IE 9]>
     <script src="node_modules/es5-shim/es5-sham.js"></script>
