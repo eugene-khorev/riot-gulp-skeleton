@@ -1,14 +1,18 @@
 <comment-form>
-  <form onsubmit={ onSubmit }>
-    <hr>
-    <label>Author</label>
-    <input type="text" name="author" value="{ comment.author }">
+  <form class="pure-form pure-form-stacked" onsubmit={ onSubmit }>
+    <fieldset>
+      <legend>Add your comment</legend>
+      <label for="author">Author</label>
+      <input type="text" id="author" name="author" placeholder="Author" value="{ comment.author }">
 
-    <label>Comment</label>
-    <textarea name="text" value="{ comment.text }"></textarea>
+      <label for="text">Comment</label>
+      <textarea id="text" name="text" placeholder="Text" value="{ comment.text }"></textarea>
 
-    <hr>
-    <button name="add">add</button>
+      <hr>
+      <button type="submit" class="pure-button pure-button-primary" name="add">
+        <i class="fa fa-cog"></i> Add comment
+      </button>
+    </fieldset>
   </form>
 
   <script>
